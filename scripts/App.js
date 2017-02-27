@@ -5,40 +5,24 @@ export default class App extends Component {
     super(props);
     this.state = {
       data: []
-      // quoteText: props.quoteText,
-      // quoteAuthor: props.quoteAuthor,
-      // senderLink: props.senderLink,
-      // quoteLink: props.quoteLink
     };
   }
 
 
   componentDidMount() {
-    fetch('http://api.forismatic.com/api/1.0/?method=getQuote&lang=en&format=json', { mode: 'no-cors' })
-      .then((response) => response.text())
-      .then((data) => {
-        this.setState({
-          data
-          // quoteText: body.quoteText,
-          // quoteAuthor: body.quoteAuthor,
-          // senderLink: body.senderLink,
-          // quoteLink: body.quoteLink
-        });
-        console.log('Request successful', data);
-        return data;
-      })
-      .catch(err => console.error('http://api.forismatic.com/api/1.0/?method=getQuote&lang=en&format=json', err.toString()));
+    fetch('https://randomuser.me/api/?results=5')
+    .then((response) => response.json())
+    .then((body) => this.setState({ data: body }))
+    .catch(err => console.log(err));
   }
 
   render() {
+    console.log(`state: ${JSON.stringify(this.state)}`);
+    const users = this.state.data.results.map((value) => <li key={value.gender}>{value.gender}</li>);
+
     return (
-      <div>
-        Test
-        <h1>{this.state.data}</h1>
-        {/*<h1>{this.state.quoteText}</h1>
-        <h1>{this.state.quoteAuthor}</h1>
-        <h1>{this.state.senderLink}</h1>
-        <h1>{this.state.quoteLink}</h1>*/}
+      <div>Test
+      <div>{users}</div>
       </div>
     );
   }
