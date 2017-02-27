@@ -22,12 +22,11 @@ export default class App extends Component {
 
   render() {
     if (this.state.isLoading) return <div>Loading...</div>;
-
-    const users = this.state.data.results.map((value) => <li key={value.gender}>{value.gender}</li>);
+    const { results } = this.state.data;
 
     return (
       <div>Test
-      <div>{users}</div>
+      <div>{results.map((value) => <li key={value.email}>{value.email}</li>)}</div>
       </div>
     );
   }
