@@ -46,12 +46,13 @@
 
 const webpack = require('webpack');
 const path = require('path');
+const Dotenv = require('dotenv-webpack');
 
 module.exports = {
   entry: [
     'webpack-dev-server/client?http://localhost:5000',
     'webpack/hot/dev-server',
-    './scripts/index'
+    './src/index'
   ],
   output: {
     path: __dirname,
@@ -64,18 +65,22 @@ module.exports = {
   devtool: 'eval-source-map',
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoErrorsPlugin()
+    new webpack.NoErrorsPlugin(),
+    new Dotenv({
+      path: './.env' // Path to .env file (this is the default)
+      // safe: true // load .env.example (defaults to "false" which does not use dotenv-safe)
+    })
   ],
   module: {
     loaders: [
       {
         test: /\.jsx?$/,
-        loader: "babel",
+        loader: 'babel',
         query:
         {
-          presets:['es2015', 'react']
+          presets: ['es2015', 'react']
         },
-        include: path.join(__dirname, 'scripts')
+        include: path.join(__dirname, 'src')
       }
     ]
   }
