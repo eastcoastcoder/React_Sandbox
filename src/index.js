@@ -1,90 +1,35 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import ReactDOM from 'react-dom';
-import QuizChildOne from './components/QuizChildOne';
-import QuizChildTwo from './components/QuizChildTwo';
-import DangerQuizChildThree from './components/DangerQuizChildThree';
-import CountDisplay from './components/CountDisplay';
+import { render } from 'react-dom';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from 'react-router-dom';
+import Main from './components/Main';
 import ClickDisplay from './components/ClickDisplay';
-import Book from './components/Book';
+// import CountDisplay from './components/CountDisplay';
 
-class Quiz extends React.Component {
-  constructor(props) {
-    super(props);
+render(
+  <Router>
+    <div>
+      <ul>
+        <li><Link to="/">Main</Link></li>
+        <li><Link to="/click">ClickDisplay</Link></li>
+        <li><Link to="/count">CountDisplay</Link></li>
+      </ul>
 
-    this.state = {
-      counter: 1,
-      data: [],
-      isLoading: true
-    };
+      <hr />
 
-    setInterval(() => {
-      this.setState({ counter: this.state.counter + 1 });
-    }, 1000);
-  }
+      <Route exact path="/" component={Main} />
 
-  componentWillMount() {
-    const token = process.env.FBTOKEN;
-    fetch(`https://graph.facebook.com/v2.9/1726444857365752/photos?fields=images&access_token=${token}`)
-    .then((response) => response.json())
-    .then((body) =>
-    this.setState({
-      isLoading: false,
-      data: body
-    }))
-    .catch(err => console.log(err));
-  }
-
-  render() {
-    if (this.state.isLoading) return <div>Loading...</div>;
-    const styles = {
-      color: this.props.foregroundColor,
-      backgroundColor: this.props.backgrondColor
-    };
-    const results = this.state.data.data;
-    const dude = results[(Math.random() * results.length | 0)];
-
-    return (
-      <div>
-        <ClickDisplay style={styles} counter={this.state.counter} />
-        <div><img src={dude.images[0].source} alt="IT IS WEDNESDAY" /></div>
-        <CountDisplay style={styles} counter={this.state.counter} />
-        <h1>{this.props.foregroundColor}</h1>
-        {this.props.books.map((b) => <Book title={b} />)}
-        {this.props.children}
-      </div>
-    );
-  }
-}
-// Default Props Example
-Quiz.propTypes = {
-  foregroundColor: PropTypes.string.isRequired,
-  backgrondColor: PropTypes.string.isRequired,
-  books: PropTypes.array.isRequired,
-  children: React.PropTypes.node
-};
-
-Quiz.defaultProps = {
-  foregroundColor: 'blue',
-  backgrondColor: 'black'
-};
-
-ReactDOM.render(
-  <div>
-    { // Is today an Odd Numbered Day?
-      new Date().getDate % 2 !== 0 ?
-        <Quiz books={['lol', 'wtf', 'okbbgrl']} >
-          <QuizChildOne />
-          <QuizChildTwo />
-          <DangerQuizChildThree dangerous="<strong>Austin Danger Powers</strong>" />
-        </Quiz> :
-        <Book title="hi" interval={5000} onInterval={doTheThing} />
-    }
-    {'Bob'}{' '}{'Alice'}
-  </div>,
+      <Switch>
+        <Route exact path="/click" component={() => <ClickDisplay counter={0} />} />
+        <Route path="/click/:start" component={({ match }) => <ClickDisplay counter={Number(match.params.start)} />} />
+      </Switch>
+      {/* <Route path="/count" component={CountDisplay} /> */}
+    </div>
+  </Router>,
     document.querySelector('#root')
 );
 
-function doTheThing() {
-  console.log('Hello from a function on the parent.');
-}
