@@ -1,9 +1,16 @@
 import React from 'react';
 
 class Book extends React.Component {
+  constructor(props) {
+    super(props);
+    setInterval(this.props.onInterval, this.props.interval);
+  }
+
   render() {
     return (
-      <div><h4>this comment says: {this.props.title}</h4></div>
+      <div>
+        <div><h4>This comment says: {this.props.title}</h4></div>
+      </div>
     );
   }
 }

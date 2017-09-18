@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
-import $ from 'jquery';
 import QuizChildOne from './components/QuizChildOne';
 import QuizChildTwo from './components/QuizChildTwo';
 import DangerQuizChildThree from './components/DangerQuizChildThree';
 import CountDisplay from './components/CountDisplay';
+import ClickDisplay from './components/ClickDisplay';
 import Book from './components/Book';
 
 class Quiz extends React.Component {
@@ -46,6 +46,7 @@ class Quiz extends React.Component {
 
     return (
       <div>
+        <ClickDisplay style={styles} counter={this.state.counter} />
         <div><img src={dude.images[0].source} alt="IT IS WEDNESDAY" /></div>
         <CountDisplay style={styles} counter={this.state.counter} />
         <h1>{this.props.foregroundColor}</h1>
@@ -60,8 +61,7 @@ Quiz.propTypes = {
   foregroundColor: PropTypes.string.isRequired,
   backgrondColor: PropTypes.string.isRequired,
   books: PropTypes.array.isRequired,
-  children: React.PropTypes.node,
-  dangerous: PropTypes.string.isRequired
+  children: React.PropTypes.node
 };
 
 Quiz.defaultProps = {
@@ -78,9 +78,13 @@ ReactDOM.render(
           <QuizChildTwo />
           <DangerQuizChildThree dangerous="<strong>Austin Danger Powers</strong>" />
         </Quiz> :
-        <Book title="hi" />
+        <Book title="hi" interval={5000} onInterval={doTheThing} />
     }
     {'Bob'}{' '}{'Alice'}
   </div>,
     document.querySelector('#root')
 );
+
+function doTheThing() {
+  console.log('Hello from a function on the parent.');
+}

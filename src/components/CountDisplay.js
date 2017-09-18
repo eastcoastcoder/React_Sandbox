@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import $ from 'jquery';
 
 class CountDisplay extends React.Component {
   componentDidUpdate() {
