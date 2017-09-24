@@ -6,6 +6,7 @@ import {
   Route,
   Link
 } from 'react-router-dom';
+import { Tabs, Tab } from 'react-materialize';
 import Main from './components/Main';
 import ClickDisplay from './components/ClickDisplay';
 // import CountDisplay from './components/CountDisplay';
@@ -13,11 +14,11 @@ import ClickDisplay from './components/ClickDisplay';
 render(
   <Router>
     <div>
-      <ul>
-        <li><Link to="/">Main</Link></li>
-        <li><Link to="/click">ClickDisplay</Link></li>
-        <li><Link to="/count">CountDisplay</Link></li>
-      </ul>
+      <Tabs className="tab-demo z-depth-1">
+        <Tab title="Main" active><Link to="/">Main</Link></Tab>
+        <Tab title="ClickDisplay"><Link to="/click">ClickDisplay</Link></Tab>
+        <Tab title="CountDisplay"><Link to="/count">CountDisplay</Link></Tab>
+      </Tabs>
 
       <hr />
 
