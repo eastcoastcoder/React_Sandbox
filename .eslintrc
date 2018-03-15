@@ -6,6 +6,10 @@
     "es6": true,
     "node": true
   },
+  "globals": {
+    "React": false,
+    "ReactDOM": false
+  },
   "plugins": [
     "import",
     "promise",
@@ -25,11 +29,14 @@
     "import/no-unresolved": ["error", { "ignore": ["electron"] }],
     "import/no-extraneous-dependencies": "off",
     "no-use-before-define": "off",
+    "no-unused-vars": "off",
     "promise/param-names": 2,
     "promise/always-return": 2,
     "promise/catch-or-return": 2,
     "promise/no-native": 0,
+    "react/no-array-index-key": "off",
     "react/jsx-no-bind": "off",
+    "react/jsx-no-undef": "off",
     "react/jsx-filename-extension": ["error", { "extensions": [".js", ".jsx"] }],
     "react/prefer-stateless-function": "off",
     "react/prop-types": "off"
