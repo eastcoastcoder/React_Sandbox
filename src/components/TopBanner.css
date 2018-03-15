@@ -1,0 +1,307 @@
+/*! CSS Used from: file:///Users/ethanx94/Development/ethanx94.github.io/css/bootstrap.css */
+
+section {
+    display: block;
+}
+
+video {
+    display: inline-block;
+    vertical-align: baseline;
+}
+
+h1 {
+    margin: .67em 0;
+    font-size: 2em;
+}
+
+img {
+    border: 0;
+}
+
+@media print {
+    * {
+        color: #000!important;
+        text-shadow: none!important;
+        background: transparent!important;
+        box-shadow: none!important;
+    }
+    img {
+        page-break-inside: avoid;
+    }
+    img {
+        max-width: 100%!important;
+    }
+    h2 {
+        orphans: 3;
+        widows: 3;
+    }
+    h2 {
+        page-break-after: avoid;
+    }
+}
+
+* {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+*:before,
+*:after {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+img {
+    vertical-align: middle;
+}
+
+h1,
+h2 {
+    font-family: inherit;
+    font-weight: 500;
+    line-height: 1.1;
+    color: inherit;
+}
+
+h1,
+h2 {
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+h1 {
+    font-size: 36px;
+}
+
+h2 {
+    font-size: 30px;
+}
+
+.row {
+    margin-right: -15px;
+    margin-left: -15px;
+}
+
+.clearfix:before,
+.clearfix:after,
+.row:before,
+.row:after {
+    display: table;
+    content: " ";
+}
+
+.clearfix:after,
+.row:after {
+    clear: both;
+}
+
+
+/*! CSS Used from: file:///Users/ethanx94/Development/ethanx94.github.io/css/style.css */
+
+h1,
+h2 {
+    margin: 0;
+}
+
+.top-header {
+    margin-top: 50px;
+}
+
+.banner {
+    background-size: cover;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    text-align: center;
+    min-height: 750px;
+}
+
+.banner-info {
+    width: 65%;
+    margin: 141px auto 0 auto;
+}
+
+.banner-right h1 {
+    font-size: 34px;
+    font-weight: 800;
+    color: #ffffff;
+    margin: 35px 0 15px 0;
+    letter-spacing: 15px;
+}
+
+.banner-right h2 {
+    font-size: 50px;
+    font-weight: 300;
+    color: #ffffff;
+    margin: 15px 0 45px 0;
+}
+
+.banner-left {
+    float: left;
+}
+
+.banner-right {
+    float: right;
+}
+
+.border {
+    background: #69c3d0;
+    width: 70%;
+    margin: 0 auto;
+    padding: 1px;
+}
+
+.row {
+    margin-left: 0;
+    margin-right: 0;
+}
+
+@media (max-width:1440px) {
+    .top-header {
+        margin-top: 30px;
+    }
+    .banner {
+        min-height: 659px;
+    }
+}
+
+@media (max-width:1024px) {
+    .banner-info {
+        width: 78%;
+        margin: 100px auto 0 auto;
+    }
+    .banner-right h1 {
+        font-size: 30px;
+        margin: 23px 0 15px 0;
+    }
+    .banner-right h2 {
+        font-size: 45px;
+    }
+    .banner {
+        min-height: 575px;
+    }
+}
+
+@media (max-width:768px) {
+    .banner-info {
+        width: 96%;
+    }
+    .banner-left img {
+        width: 100%;
+    }
+    .banner-left {
+        float: left;
+        width: 32%;
+    }
+    .banner-right {
+        float: right;
+        width: 64%;
+    }
+    .banner-info {
+        margin: 80px auto 0 auto;
+    }
+    .banner {
+        min-height: 467px;
+    }
+    .banner-right h1 {
+        font-size: 28px;
+    }
+    .border {
+        width: 58%;
+    }
+    .banner-right h2 {
+        font-size: 40px;
+    }
+    .banner-right h2 {
+        margin: 15px 0 35px 0;
+    }
+}
+
+@media (max-width:640px) {
+    .banner-right h1 {
+        font-size: 26px;
+    }
+    .banner-right h2 {
+        font-size: 35px;
+    }
+    .banner-info {
+        margin: 60px auto 0 auto;
+    }
+    .banner {
+        min-height: 393px;
+    }
+}
+
+@media (max-width:480px) {
+    .banner-info {
+        width: 100%;
+    }
+    .banner-left {
+        float: left;
+        width: 30%;
+    }
+    .banner-right {
+        float: right;
+        width: 70%;
+    }
+    .banner-right h1 {
+        font-size: 20px;
+        letter-spacing: 10px;
+    }
+    .banner-right h2 {
+        font-size: 30px;
+    }
+    .banner-right h2 {
+        margin: 10px 0 28px 0;
+    }
+    .banner {
+        min-height: 352px;
+    }
+    .banner-right h1 {
+        margin: 8px 0 15px 0;
+    }
+}
+
+@media (max-width:320px) {
+    .top-header {
+        margin-top: 18px;
+    }
+    .banner-right h1 {
+        font-size: 16px;
+        letter-spacing: 5px;
+    }
+    .banner-right h2 {
+        font-size: 18px;
+    }
+    .banner-right h2 {
+        margin: 6px 0 14px 0;
+    }
+    .banner-right h1 {
+        margin: 8px 0 8px 0;
+    }
+    .banner-info {
+        margin: 38px auto 0 auto;
+    }
+    .banner {
+        min-height: 231px;
+    }
+}
+
+.video-section {
+    overflow: hidden;
+    position: relative;
+}
+
+#video_background {
+    position: absolute;
+    top: 0;
+    right: 0px;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    z-index: -1000;
+    overflow: hidden;
+}
