@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { hot } from 'react-hot-loader';
+import Radium, { StyleRoot } from 'radium';
+
 import Person from './Components/Person';
 import './css/App.css';
 
@@ -11,7 +13,7 @@ class App extends Component {
       { id: 3, name: 'Dave', age: 44 },
     ],
     // targetPerson: 0,
-    visible: true,
+    visible: false,
   }
 
   togglePeopleHandler = () => {
@@ -41,35 +43,55 @@ class App extends Component {
   render() {
     const { persons, visible } = this.state;
     const style = {
-      backgroundColor: 'white',
+      backgroundColor: !visible ? 'green' : 'red',
+      color: 'white',
       font: 'inherit',
       border: '1px solid blue',
       padding: '8px',
-      cursor: 'pointer'
-    };
-    return (
-      <div className="App">
-        <h1>Hi, I&#39;m a React App</h1>
-        <p>This is really working</p>
-        <button
-          style={style}
-          onClick={this.togglePeopleHandler}>
-          Toggle People
-        </button>
-        {visible &&
-          persons.map((person, index) => (
-            <Person
-              key={person.id}
-              changed={e => this.nameChangeHandler(e, person.id)}
-              click={() => this.deletePersonHandler(index)}
-              name={person.name}
-              age={person.age}
-            />
-          ))
+      cursor: 'pointer',
+      ':hover': !visible
+        ? {
+          backgroundColor: 'lightgreen',
+          color: 'black',
         }
-      </div>
+        : {
+          backgroundColor: 'lightred',
+          color: 'black',
+        }
+    };
+
+    const classes = [];
+    if (persons.length <= 2) {
+      classes.push('red');
+    }
+    if (persons.length <= 1) {
+      classes.push('bold');
+    }
+
+    return (
+      <StyleRoot>
+        <div className="App">
+          <h1>Hi, I&#39;m a React App</h1>
+          <p className={classes.join(' ')}>This is really working</p>
+          <button
+            style={style}
+            onClick={this.togglePeopleHandler}>
+          Toggle People
+          </button>
+          {visible &&
+            persons.map((person, index) => (
+              <Person
+                key={person.id}
+                changed={e => this.nameChangeHandler(e, person.id)}
+                click={() => this.deletePersonHandler(index)}
+                name={person.name}
+                age={person.age}
+              />
+            ))}
+        </div>
+      </StyleRoot>
     );
   }
 }
 
-export default hot(module)(App);
+export default hot(module)(Radium(App));
