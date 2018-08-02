@@ -1,43 +1,45 @@
 import React, { Component } from 'react';
-import { hot } from 'react-hot-loader'
-import Person from './Components/Person'
+import { hot } from 'react-hot-loader';
+import Person from './Components/Person';
 import './css/App.css';
 
 class App extends Component {
   state = {
     persons: [
-      { name: 'Max', age: 12},
-      { name: 'Bill', age: 22},
-      { name: 'Dave', age: 44},
+      { id: 1, name: 'Max', age: 12 },
+      { id: 2, name: 'Bill', age: 22 },
+      { id: 3, name: 'Dave', age: 44 },
     ],
-    targetPerson: 0,
+    // targetPerson: 0,
     visible: true,
   }
 
-  switchPersonHandler = () => {
-    const { targetPerson, persons } = this.state;
-    this.setState({
-      targetPerson:
-        (targetPerson < persons.length - 1)
-          ? targetPerson + 1
-          : 0
-      });
-  }
-
-  togglePersonHandler = () => {
+  togglePeopleHandler = () => {
     const { visible } = this.state;
     this.setState({ visible: !visible });
   }
 
-  nameChangeHandler = (e) => {
-    const copiedState = { ...this.state };
-    const { targetPerson } = copiedState;
-    copiedState.persons[targetPerson].name = e.target.value;
-    this.setState(copiedState);
+  nameChangeHandler = (e, id) => {
+    // Most efficient way without mutating state
+    // Always work with copies
+    const personIndex = this.state.persons.findIndex(person => person.id === id);
+    const person = {
+      ...this.state.persons[personIndex],
+    };
+    person.name = e.target.value;
+    const persons = [...this.state.persons];
+    persons[personIndex] = person;
+    this.setState({ persons });
+  }
+
+  deletePersonHandler = (index) => {
+    const persons = [...this.state.persons];
+    persons.splice(index, 1);
+    this.setState({ persons });
   }
 
   render() {
-    const { persons, targetPerson, visible } = this.state;
+    const { persons, visible } = this.state;
     const style = {
       backgroundColor: 'white',
       font: 'inherit',
@@ -47,20 +49,27 @@ class App extends Component {
     };
     return (
       <div className="App">
-        <h1>Hi, I'm a React App</h1>
+        <h1>Hi, I&#39;m a React App</h1>
         <p>This is really working</p>
         <button
           style={style}
-          onClick={this.switchPersonHandler}>Switch Person</button>
-        <button
-          style={style}
-          onClick={this.togglePersonHandler}>Toggle Person</button>
+          onClick={this.togglePeopleHandler}>
+          Toggle People
+        </button>
         {visible &&
-          <Person changed={this.nameChangeHandler} click={this.switchNameHandler} name={persons[targetPerson].name} age={persons[targetPerson].age} />
+          persons.map((person, index) => (
+            <Person
+              key={person.id}
+              changed={e => this.nameChangeHandler(e, person.id)}
+              click={() => this.deletePersonHandler(index)}
+              name={person.name}
+              age={person.age}
+            />
+          ))
         }
       </div>
     );
   }
 }
 
-export default hot(module)(App)
+export default hot(module)(App);
