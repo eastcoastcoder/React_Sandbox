@@ -1,6 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const dotenv = require('dotenv');
 
 dotenv.config();
@@ -31,6 +32,7 @@ module.exports = {
       APPID: JSON.stringify(appId),
       APPSECRET: JSON.stringify(appSecret),
     }),
+    new ExtractTextPlugin('styles.css'),
   ],
   devServer: {
     historyApiFallback: true,
@@ -62,8 +64,18 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        loader: 'style-loader!css-loader',
-      },
+        use: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: {
+            loader: 'css-loader',
+            options: {
+              importLoaders: 1,
+              modules: true,
+              localIdentName: 'cssm-[name]_[local]_[hash:base64:5]',
+            }
+          }
+        })
+      }
     ]
   }
 };

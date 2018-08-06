@@ -1,27 +1,27 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
-import './css/index.css';
-import App from './App';
+import './index.css';
+import App from './containers/App';
 import registerServiceWorker from './registerServiceWorker';
 
 ReactDOM.render(
   <AppContainer>
     <App />
   </AppContainer>,
- document.getElementById('root')
+  document.getElementById('root')
 );
 
 registerServiceWorker();
 
 if (module.hot) {
-  module.hot.accept('./App', () => {
-    const NextApp = require('./App').default;
+  module.hot.accept('./containers/App', () => {
+    const NextApp = App.default;
     ReactDOM.render(
       <AppContainer>
         <NextApp />
       </AppContainer>,
-      rootElement
+      document.getElementById('root')
     );
   });
 }
