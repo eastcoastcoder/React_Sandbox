@@ -10,7 +10,7 @@ const appId = process.env.APPID;
 const appSecret = process.env.APPSECRET;
 
 module.exports = {
-  devtool: 'eval',
+  devtool: 'inline-source-map',
   entry: [
     'babel-polyfill',
     'react-hot-loader/patch',
