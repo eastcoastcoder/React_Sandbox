@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { hot } from 'react-hot-loader';
 
 import Persons from '../components/Persons/Persons';
 import Cockpit from '../components/Cockpit/Cockpit';
 import classes from './App.css';
 
-class App extends Component {
+class App extends PureComponent {
   state = {
     persons: [
       { id: 1, name: 'Max', age: 12 },
@@ -45,6 +45,7 @@ class App extends Component {
 
     return (
       <div className={classes.App}>
+        <button onClick={() => this.setState({ visible: true })} >Show Persons</button>
         <Cockpit
           visible={visible}
           togglePeopleHandler={this.togglePeopleHandler}
