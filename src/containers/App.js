@@ -16,11 +16,20 @@ class App extends PureComponent {
     ],
     // targetPerson: 0,
     visible: false,
+    toggleClicked: 0,
   }
 
   togglePeopleHandler = () => {
     const { visible } = this.state;
-    this.setState({ visible: !visible });
+    /*
+      setState is async behind-the scenes
+      If setState relies on a previous state,
+      Call it with functional sytnax to ensure updates are sync'd
+    */
+    this.setState((prevState, props) => ({
+      visible: !visible,
+      toggleClicked: prevState.toggleClicked + 1,
+    }));
   }
 
   nameChangeHandler = (e, id) => {
