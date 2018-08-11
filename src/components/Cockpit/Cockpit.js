@@ -1,12 +1,13 @@
 import React from 'react';
 
 import classes from './Cockpit.css';
+import Aux from '../../hoc/Aux';
 
 const Cockpit = ({ persons, togglePeopleHandler, visible }) => {
   const assignedClasses = [];
-  let btnClass = '';
+  let btnClass = classes.Button;
   if (visible) {
-    btnClass = classes.Red;
+    btnClass = [classes.Button, classes.Red].join(' ');
   }
   if (persons.length <= 2) {
     assignedClasses.push('red');
@@ -15,7 +16,7 @@ const Cockpit = ({ persons, togglePeopleHandler, visible }) => {
     assignedClasses.push('bold');
   }
   return (
-    <div className={classes.Cockpit}>
+    <Aux>
       <h1>Hi, I&#39;m a React App</h1>
       <p className={assignedClasses.join(' ')}>This is really working</p>
       <button
@@ -23,7 +24,7 @@ const Cockpit = ({ persons, togglePeopleHandler, visible }) => {
         onClick={togglePeopleHandler}>
       Toggle People
       </button>
-    </div>
+    </Aux>
   );
 };
 

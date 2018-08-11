@@ -9,4 +9,11 @@ const Person = ({ name, age, click, changed }) => (
   </div>
 );
 
+/*
+const Person = ({ name, age, click, changed }) => [
+  <p key ="1" onClick={click}>I'm {name}, my age is {age}.</p>,
+  <input key= "2" type="text" onChange={changed} value={name} />
+];
+*/
+
 export default Person;
