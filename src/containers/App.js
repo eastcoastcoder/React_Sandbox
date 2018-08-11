@@ -3,6 +3,8 @@ import { hot } from 'react-hot-loader';
 
 import Persons from '../components/Persons/Persons';
 import Cockpit from '../components/Cockpit/Cockpit';
+import Aux from '../hoc/Aux';
+import withClass from '../hoc/withClass';
 import classes from './App.css';
 
 class App extends PureComponent {
@@ -44,7 +46,7 @@ class App extends PureComponent {
     const { persons, visible } = this.state;
 
     return (
-      <div className={classes.App}>
+      <Aux>
         <button onClick={() => this.setState({ visible: true })} >Show Persons</button>
         <Cockpit
           visible={visible}
@@ -58,9 +60,9 @@ class App extends PureComponent {
             click={this.deletePersonHandler}
           />
         )}
-      </div>
+      </Aux>
     );
   }
 }
 
-export default hot(module)(App);
+export default hot(module)(withClass(App, classes.App));
