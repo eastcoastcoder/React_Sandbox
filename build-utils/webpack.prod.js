@@ -8,38 +8,32 @@ const config = {
     app: [`${commonPaths.appEntry}/index.js`]
   },
   output: {
-    filename: 'static/[name].[hash].js'
+    filename: 'static/[name].[hash].js',
+    publicPath: './'
   },
   devtool: 'source-map',
   module: {
     rules: [
       {
         test: /\.css$/,
+        exclude: /\.emotion\.css$/,
         use: ExtractTextPlugin.extract({
           fallback: 'style-loader',
           use: [
-            {
-              loader: 'css-loader',
-              options: {
-                modules: true,
-                importLoaders: 1,
-                camelCase: true,
-                sourceMap: true
-              }
-            },
-            {
-              loader: 'postcss-loader',
-              options: {
-                config: {
-                  ctx: {
-                    autoprefixer: {
-                      browsers: ['>0.25%', 'not ie 11', 'not op_mini all']
-                    }
-                  }
-                }
-              }
-            }
+            'css-loader?minimize&sourceMap&modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]',
           ]
+        })
+      },
+      {
+        test: /emotion\.css$/,
+        use: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: {
+            loader: 'css-loader',
+            options: {
+              sourceMap: true
+            }
+          }
         })
       }
     ]

@@ -1,19 +1,19 @@
 import React from 'react';
+import { css } from 'react-emotion';
 
-import classes from './Cockpit.css';
 import Aux from '../../hoc/Aux';
 
 const Cockpit = ({ persons, togglePeopleHandler, visible, login }) => {
   const assignedClasses = [];
-  let btnClass = classes.Button;
+  let btnClass = Button;
   if (visible) {
-    btnClass = [classes.Button, classes.Red].join(' ');
+    btnClass = `${Button} ${Red}`;
   }
   if (persons.length <= 2) {
-    assignedClasses.push('red');
+    assignedClasses.push(red);
   }
   if (persons.length <= 1) {
-    assignedClasses.push('bold');
+    assignedClasses.push(bold);
   }
   return (
     <Aux>
@@ -30,5 +30,36 @@ const Cockpit = ({ persons, togglePeopleHandler, visible, login }) => {
     </Aux>
   );
 };
+
+const red = css`
+  color: red;
+`;
+
+const bold = css`
+  font-weight: bold;
+`;
+
+const Button = css`
+  border: 1px solid blue;
+  padding: 16px;
+  background-color: green;
+  font: inherit;
+  color: white;
+  cursor: pointer;
+  &:hover {
+    background-color: lightgreen;
+    color: black;
+  }
+  .${Red}
+`;
+
+const Red = css`
+  background-color: red;
+  &:hover {
+    background-color: salmon;
+    color: black;
+  }
+`;
+
 
 export default Cockpit;

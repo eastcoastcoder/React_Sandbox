@@ -17,20 +17,21 @@ const config = {
     rules: [
       {
         test: /\.css$/,
+        exclude: /\.emotion\.css$/,
         use: [
           {
             loader: 'style-loader'
           },
-          {
-            loader: 'css-loader',
-            options: {
-              modules: true,
-              camelCase: true,
-              sourceMap: true
-            }
-          }
+          'css-loader?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]',
         ]
-      }
+      },
+      {
+        test: /\.emotion\.css$/,
+        use: [
+          'style-loader',
+          'css-loader'
+        ]
+      },
     ]
   },
   plugins: [new webpack.HotModuleReplacementPlugin()],

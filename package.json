@@ -13,6 +13,10 @@
     "build:bundleanalyzer": "yarn build -- --env.addons=bundleanalyzer"
   },
   "dependencies": {
+    "emotion": "^9.2.6",
+    "react-emotion": "^9.2.6",
+    "emotion-server": "^9.2.6",
+    "emotion-theming": "^9.2.6",
     "prop-types": "^15.6.2",
     "radium": "^0.24.1",
     "react": "^16.4.1",
@@ -27,6 +31,7 @@
     "babel-loader": "^7.1.5",
     "babel-preset-env": "^1.7.0",
     "babel-eslint": "^8.2.3",
+    "babel-plugin-emotion": "^9.2.6",
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-1": "^6.24.1",
     "chalk": "^2.4.1",
