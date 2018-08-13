@@ -9,6 +9,7 @@ class Persons extends PureComponent {
   lastPersonRef = React.createRef();
 
   render() {
+    // const { isAuthenticated } = this.props;
     const { persons, click, changed } = this.props;
     return persons.map((person, index) => (
       <Person
@@ -17,6 +18,7 @@ class Persons extends PureComponent {
         position={index}
         age={person.age}
         key={person.id}
+        // authenticated={isAuthenticated}
         ref={this.lastPersonRef}
         // forwardedRef={this.lastPersonRef}
         changed={e => changed(e, person.id)}

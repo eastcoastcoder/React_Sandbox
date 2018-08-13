@@ -3,7 +3,7 @@ import React from 'react';
 import classes from './Cockpit.css';
 import Aux from '../../hoc/Aux';
 
-const Cockpit = ({ persons, togglePeopleHandler, visible }) => {
+const Cockpit = ({ persons, togglePeopleHandler, visible, login }) => {
   const assignedClasses = [];
   let btnClass = classes.Button;
   if (visible) {
@@ -23,6 +23,9 @@ const Cockpit = ({ persons, togglePeopleHandler, visible }) => {
         className={btnClass}
         onClick={togglePeopleHandler}>
       Toggle People
+      </button>
+      <button onClick={login}>
+        Log in
       </button>
     </Aux>
   );
