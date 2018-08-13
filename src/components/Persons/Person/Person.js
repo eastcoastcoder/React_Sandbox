@@ -27,6 +27,7 @@ class Person extends Component {
         <AuthContext.Consumer>
           {authenticated => authenticated && <p>I&apos;m authenticated.</p>}
         </AuthContext.Consumer>
+        {/* eslint-disable-next-line */}
         <p onClick={click}>I&apos;m {name}, my age is {age}.</p>
         <input
           ref={this.inputElement}
@@ -44,12 +45,13 @@ const Person = ({ name, age, click, changed }) => [
   <input key= "2" type="text" onChange={changed} value={name} />
 ];
 */
-
+/* eslint-disable */
 Person.propTypes = {
   click: PropTypes.func,
   name: PropTypes.string,
   age: PropTypes.number,
   changed: PropTypes.func,
 };
+/* eslint-enable */
 
 export default withClass(Person, classes.Person);

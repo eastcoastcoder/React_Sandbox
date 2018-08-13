@@ -1,5 +1,4 @@
 import React, { PureComponent } from 'react';
-import { hot } from 'react-hot-loader';
 
 import Persons from '../components/Persons/Persons';
 import Cockpit from '../components/Cockpit/Cockpit';
@@ -29,6 +28,7 @@ class App extends PureComponent {
       If setState relies on a previous state,
       Call it with functional sytnax to ensure updates are sync'd
     */
+    // eslint-disable-next-line
     this.setState((prevState, props) => ({
       visible: !visible,
       toggleClicked: prevState.toggleClicked + 1,
@@ -54,6 +54,16 @@ class App extends PureComponent {
     this.setState({ persons });
   }
 
+  /* New Lifecycles
+  static getDerivedStateFromProps(nextProps, prevState) {
+    console.log('getDerivedSfromP', nextProps, prevState);
+    return prevState;
+  }
+
+  getSnapshotBeforeUpdate() {
+    console.log('getSnapshotBeforeUpdate');
+  }
+  */
 
   loginHandler = () => {
     this.setState({ authenticated: true });
@@ -86,4 +96,4 @@ class App extends PureComponent {
   }
 }
 
-export default hot(module)(withClass(App, classes.App));
+export default withClass(App, classes.App);
