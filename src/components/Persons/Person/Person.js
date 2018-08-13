@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { css } from 'emotion';
 
-import classes from './Person.css';
 import withClass from '../../../hoc/withClass';
 import Aux from '../../../hoc/Aux';
 import { AuthContext } from '../../../containers/App';
@@ -39,6 +39,18 @@ class Person extends Component {
   }
 }
 
+const PersonStyle = css`
+  width: 60%;
+  margin: 16px auto;
+  border: 1px solid #eee;
+  box-shadow: 0 2px 3px #ccc;
+  padding: 16px;
+  text-align: center;
+  @media (min-width: 500px) {
+      width: 450px;
+  }
+`;
+
 /*
 const Person = ({ name, age, click, changed }) => [
   <p key ="1" onClick={click}>I'm {name}, my age is {age}.</p>,
@@ -54,4 +66,4 @@ Person.propTypes = {
 };
 /* eslint-enable */
 
-export default withClass(Person, classes.Person);
+export default withClass(Person, PersonStyle);

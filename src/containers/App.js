@@ -1,10 +1,10 @@
 import React, { PureComponent } from 'react';
+import { css } from 'react-emotion';
 
 import Persons from '../components/Persons/Persons';
 import Cockpit from '../components/Cockpit/Cockpit';
 import Aux from '../hoc/Aux';
 import withClass from '../hoc/withClass';
-import classes from './App.css';
 
 export const AuthContext = React.createContext(false);
 
@@ -96,4 +96,8 @@ class App extends PureComponent {
   }
 }
 
-export default withClass(App, classes.App);
+const AppStyle = css`
+  text-align: center;
+`;
+
+export default withClass(App, AppStyle);
