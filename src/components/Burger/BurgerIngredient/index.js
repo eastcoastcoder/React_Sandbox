@@ -72,7 +72,7 @@ const Seeds1 = css`
   border-radius: 40%;
   transform: rotate(-20deg);
   box-shadow: inset -2px -3px #c9c9c9;
-  &:after {
+  &::after {
     content: "";
     width: 100%;
     height: 100%;
@@ -84,7 +84,7 @@ const Seeds1 = css`
     transform: rotate(60deg);
     box-shadow: inset -1px 2px #c9c9c9;
   }
-  &:before {
+  &::before {
     content: "";
     width: 100%;
     height: 100%;
@@ -108,7 +108,7 @@ const Seeds2 = css`
   border-radius: 40%;
   transform: rotate(10deg);
   box-shadow: inset -3px 0 #c9c9c9;
-  &:before {
+  &::before {
     content: "";
     width: 100%;
     height: 100%;

@@ -4,14 +4,22 @@ import { css } from 'react-emotion';
 import BurgerIngredient from './BurgerIngredient';
 
 // eslint-disable-next-line
-const burger = props => (
-  <div className={Burger}>
-    <BurgerIngredient type="bread-top" />
-    <BurgerIngredient type="cheese" />
-    <BurgerIngredient type="meat" />
-    <BurgerIngredient type="bread-bottom" />
-  </div>
-);
+const burger = ({ ingredients }) => {
+  let transformedIngredients = Object.keys(ingredients)
+    .map(d => [...Array(ingredients[d])]
+      .map((_, i) => <BurgerIngredient key={d + i} type={d} />)) // eslint-disable-line
+    .reduce((arr, el) => arr.concat(el), []);
+  if (transformedIngredients.length === 0) {
+    transformedIngredients = <p>Please start adding ingredients</p>;
+  }
+  return (
+    <div className={Burger}>
+      <BurgerIngredient type="bread-top" />
+      {transformedIngredients}
+      <BurgerIngredient type="bread-bottom" />
+    </div>
+  );
+};
 
 const Burger = css`
   width: 100%;
