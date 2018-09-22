@@ -3,7 +3,6 @@ import { css } from 'react-emotion';
 
 const layout = props => (
   <Fragment>
-    <div>Toolbar, SideDrawer, Backdrop</div>
     <main className={Content}>
       {props.children}
     </main>
