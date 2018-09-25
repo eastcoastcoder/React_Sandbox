@@ -1,19 +1,24 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { css } from 'react-emotion';
 
-const modal = (props) => (
-  <div
-    className={Modal}
-    style={{
-      transform: props.show
+import Backdrop from '../Backdrop';
+
+const modal = ({ show, modalClosed, children }) => (
+  <Fragment>
+    <Backdrop show={show} clicked={modalClosed} />
+    <div
+      className={Modal}
+      style={{
+      transform: show
         ? 'translateY(0)'
         : 'translateY(-100vh)',
-      opacity: props.show
+      opacity: show
         ? '1'
         : '0',
     }}>
-    {props.children}
-  </div>
+      {children}
+    </div>
+  </Fragment>
 );
 
 const Modal = css`
