@@ -23,6 +23,7 @@
     "comma-dangle": 2,
     "generator-star-spacing": "off",
     "global-require": "off",
+    "max-len": "off",
     "import/no-unresolved": ["error", { "ignore": ["electron"] }],
     "import/no-extraneous-dependencies": "off",
     "import/no-dynamic-require": "off",
