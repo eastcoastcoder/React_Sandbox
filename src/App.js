@@ -25,23 +25,43 @@ const schema = {
   }
 };
 
-const fields = {
-  layout_grid: LayoutGridField
-}
- 
-const generateUiSchema = () => {
-  return {
-    'ui:field': 'layout_grid',
-    'ui:layout_grid': {
-      'ui:row': [
-        { 'ui:col': { md: 12, children: [
-          { 'ui:group': 'Some Field Group',
-            'ui:row': [
-              { 'ui:col': { md: 3, children: ['other'] } },
-              { 'ui:col': { md: 3, children: ['information'] } } ] }] } },
-        ]
-    }
-  };
+class WYSIWYGWidget extends Component {
+  componentDidMount() {
+    console.log('I mounted');
+  }
+  render() {
+    debugger;
+    const { editorStateObj, onEditorStateChange } = this.props;
+    return (
+      <Editor
+        editorState={editorStateObj.description}
+        wrapperClassName="demo-wrapper"
+        editorClassName="demo-editor"
+        onEditorStateChange={editorState => onEditorStateChange(editorState, 'description')}
+      />
+    );
+  }
+};
+
+// WYSIWYGWidget.defaultProps = {
+//   options: {
+//     testFunc: () => console.log('test')
+//   }
+// };
+
+const uiSchema = {
+  'ui:field': 'layout_grid',
+  'ui:field': 'description',
+  'ui:layout_grid': {
+    'ui:row': [
+      { 'ui:col': { md: 12, children: [
+        { 'ui:group': 'Some Field Group',
+          'ui:row': [
+            { 'ui:col': { md: 3, children: ['description'] } },
+            { 'ui:col': { md: 3, children: ['other'] } },
+            { 'ui:col': { md: 3, children: ['information'] } } ] }] } },
+      ]
+  }
 }
 
 const formData = {
@@ -63,7 +83,6 @@ class App extends Component {
 
   componentDidMount() {
     this.setUpEditorStates();
-    this.setUpUiSchema();
   }
 
   deriveHtmlData = (html) => {
@@ -85,20 +104,17 @@ class App extends Component {
         editorStateObj[key] = this.deriveHtmlData(formData[key]);
       }
     }
-    this.setState({ editorStateObj });
+    this.setState({ editorStateObj, loading: false });
   }
 
   onEditorStateChange = (editorState, key) => {
+    console.log(key);
     const { editorStateObj } = {...this.state};
     editorStateObj[key] = editorState;
     this.setState({
       editorStateObj,
     });
   };
-
-  setUpUiSchema = () => {
-    this.setState({ uiSchema: generateUiSchema(), loading: false  });
-  }
 
   handleSubmit = () => {
     const { editorStateObj } = this.state;
@@ -110,7 +126,7 @@ class App extends Component {
   };
 
   render() {
-    const { editorStateObj, loading, uiSchema } = this.state;
+    const { editorStateObj, loading } = this.state;
     return (
       <div className="App">
         {!loading &&
@@ -118,17 +134,21 @@ class App extends Component {
             <Form
               formData={formData}
               schema={schema}
+              // widgets={{ WYSIWYG: (props) => WYSIWYGWidget(props, editorStateObj, this.onEditorStateChange) }}
               uiSchema={uiSchema}
-              fields={fields}
+              fields={{
+                layout_grid: LayoutGridField,
+                description: (props) => <WYSIWYGWidget {...props} editorStateObj={editorStateObj} onEditorStateChange={this.onEditorStateChange} />,
+              }}
               onSubmit={this.handleSubmit}
             />
-            {WYSIWYGFields.map((key) => (
+            {/* {WYSIWYGFields.map((key) => (
               <Editor
                 editorState={editorStateObj[key]}
                 wrapperClassName="demo-wrapper"
                 editorClassName="demo-editor"
                 onEditorStateChange={editorState => this.onEditorStateChange(editorState, key)}
-              />))}
+              />))} */}
           </>}
       </div>
     );
