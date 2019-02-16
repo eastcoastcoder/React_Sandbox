@@ -1,12 +1,8 @@
 import React, { Component } from 'react';
 import './App.css';
-import { EditorState, convertToRaw, ContentState } from 'draft-js';
-import { Editor } from 'react-draft-wysiwyg';
-import { Button } from 'reactstrap';
-import draftToHtml from 'draftjs-to-html';
-import htmlToDraft from 'html-to-draftjs';
 import Form from 'react-jsonschema-form'
 import LayoutGridField from 'react-jsonschema-form-layout-grid';
+import { TypeaheadField } from "react-jsonschema-form-extras/lib/TypeaheadField";
 
 const schema = {
   properties: {
@@ -25,33 +21,17 @@ const schema = {
   }
 };
 
-class WYSIWYGWidget extends Component {
-  componentDidMount() {
-    console.log('I mounted');
-  }
-  render() {
-    debugger;
-    const { editorStateObj, onEditorStateChange } = this.props;
-    return (
-      <Editor
-        editorState={editorStateObj.description}
-        wrapperClassName="demo-wrapper"
-        editorClassName="demo-editor"
-        onEditorStateChange={editorState => onEditorStateChange(editorState, 'description')}
-      />
-    );
-  }
-};
-
-// WYSIWYGWidget.defaultProps = {
-//   options: {
-//     testFunc: () => console.log('test')
-//   }
-// };
-
 const uiSchema = {
+  'description': {
+    "ui:field": "typeahead",
+    "typeahead": {
+       options: [ { id: 1, value: "New York" }, { id: 2, value: "Washington" }],
+       labelKey: "value",
+       mapping: "id",
+       minLength: 0,
+     }
+  },
   'ui:field': 'layout_grid',
-  'ui:field': 'description',
   'ui:layout_grid': {
     'ui:row': [
       { 'ui:col': { md: 12, children: [
@@ -65,14 +45,13 @@ const uiSchema = {
 }
 
 const formData = {
-  description: '<p>Hey this <strong>editor</strong> rocks 😀</p>',
+  description: 'Hey this editor rocks 😀',
   information: '',
-  other: '<strong>OTHER THING</strong>',
+  other: 'OTHER THING',
 };
 
-const WYSIWYGFields = ['description', 'information', 'other'];
-
 class App extends Component {
+  formRef = React.createRef();
   constructor(props) {
     super(props);
     this.state = {
@@ -82,29 +61,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-    this.setUpEditorStates();
-  }
-
-  deriveHtmlData = (html) => {
-    const contentBlock = htmlToDraft(html);
-    if (contentBlock) {
-      const contentState = ContentState.createFromBlockArray(contentBlock.contentBlocks);
-      return EditorState.createWithContent(contentState);
-    } else {
-      return EditorState.createEmpty();
-    }
-  }
-
-  setUpEditorStates = () => {
-    const { editorStateObj } = {...this.state};
-    for (const key of Object.keys(formData)) {
-      if(!formData[key]) {
-        editorStateObj[key] = EditorState.createEmpty();
-      } else {
-        editorStateObj[key] = this.deriveHtmlData(formData[key]);
-      }
-    }
-    this.setState({ editorStateObj, loading: false });
+    this.setState({ loading: false });
   }
 
   onEditorStateChange = (editorState, key) => {
@@ -116,39 +73,27 @@ class App extends Component {
     });
   };
 
-  handleSubmit = () => {
-    const { editorStateObj } = this.state;
-    const resultArr = [];
-    for (const key of Object.keys(editorStateObj)) {
-      resultArr.push(draftToHtml(convertToRaw(editorStateObj[key].getCurrentContent())));
-    }
-    console.log(resultArr);
+  handleSubmit = (e) => {
+    console.log(e);
   };
 
   render() {
-    const { editorStateObj, loading } = this.state;
+    const { loading } = this.state;
     return (
       <div className="App">
         {!loading &&
           <>
             <Form
+              ref={this.formRef}
               formData={formData}
               schema={schema}
-              // widgets={{ WYSIWYG: (props) => WYSIWYGWidget(props, editorStateObj, this.onEditorStateChange) }}
               uiSchema={uiSchema}
               fields={{
                 layout_grid: LayoutGridField,
-                description: (props) => <WYSIWYGWidget {...props} editorStateObj={editorStateObj} onEditorStateChange={this.onEditorStateChange} />,
+                typeahead: TypeaheadField,
               }}
               onSubmit={this.handleSubmit}
             />
-            {/* {WYSIWYGFields.map((key) => (
-              <Editor
-                editorState={editorStateObj[key]}
-                wrapperClassName="demo-wrapper"
-                editorClassName="demo-editor"
-                onEditorStateChange={editorState => this.onEditorStateChange(editorState, key)}
-              />))} */}
           </>}
       </div>
     );
