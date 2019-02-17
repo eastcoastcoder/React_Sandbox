@@ -7,7 +7,7 @@ import { TypeaheadField } from "react-jsonschema-form-extras/lib/TypeaheadField"
 const schema = {
   properties: {
     description: {
-      type: "string",
+      type: "integer",
       title: "Description",
     },
     information: {
@@ -22,9 +22,12 @@ const schema = {
 };
 
 const uiSchema = {
-  'description': {
+  information: {
+    'ui:readonly': true,
+  },
+  description: {
     "ui:field": "typeahead",
-    "typeahead": {
+    typeahead: {
        options: [ { id: 1, value: "New York" }, { id: 2, value: "Washington" }],
        labelKey: "value",
        mapping: "id",
@@ -44,48 +47,50 @@ const uiSchema = {
   }
 }
 
-const formData = {
-  description: 'Hey this editor rocks 😀',
-  information: '',
-  other: 'OTHER THING',
-};
-
 class App extends Component {
-  formRef = React.createRef();
-  constructor(props) {
-    super(props);
-    this.state = {
-      loading: true,
-      editorStateObj: { },
-    };
-  }
+  newFormData = {
+    description: 'Hey this editor rocks 😀',
+    other: '',
+    information: '',
+  };
+
+  state = {
+    loading: true,
+  };
 
   componentDidMount() {
-    this.setState({ loading: false });
+    this.setState({ uiSchema, formData: this.newFormData, loading: false });
   }
-
-  onEditorStateChange = (editorState, key) => {
-    console.log(key);
-    const { editorStateObj } = {...this.state};
-    editorStateObj[key] = editorState;
-    this.setState({
-      editorStateObj,
-    });
-  };
 
   handleSubmit = (e) => {
     console.log(e);
   };
 
+  handleChange = ({ formData }) => {
+    let { information } = this.state.uiSchema;
+    if (information['ui:readonly'] && formData.description) {
+      let { uiSchema } = { ...this.state };
+      this.setState({ uiSchema: {} });
+      uiSchema.information['ui:readonly'] = false;
+      this.setState({ formData, uiSchema });
+    }
+    if (!information['ui:readonly'] && !formData.description) {
+      let { uiSchema } = { ...this.state };
+      this.setState({ uiSchema: {} });
+      uiSchema.information['ui:readonly'] = true;
+      this.setState({ formData, uiSchema });
+    }
+  }
+
   render() {
-    const { loading } = this.state;
+    const { loading, uiSchema, formData } = this.state;
     return (
       <div className="App">
         {!loading &&
           <>
             <Form
-              ref={this.formRef}
               formData={formData}
+              onChange={this.handleChange}
               schema={schema}
               uiSchema={uiSchema}
               fields={{
